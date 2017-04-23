@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>弹出框</title>
+    <style>
+        #mask, #dialog{
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            visibility: hidden;
+        }
+
+        #mask{
+            background: rgba(0,0,0,.7);
+            opacity: 0;
+            transition: all .7s ;
+        }
+
+        #dialog{
+            justify-content: center;
+            align-items: center;
+            display: flex;
+        }
+
+        #dialog .box{
+            width: 800px;
+            height: 400px;
+            background: #f9f9f9;
+            border: 1px solid #f7f7f7;
+            border-radius: 5px;
+            transition: all .7s ;
+            position: relative;
+            top: -900px;
+        }
+
+        #mask.show{
+            opacity: 1;
+            visibility: visible;
+            
+        }
+
+        #dialog.show{
+            display: flex;
+            visibility: visible;
+        }
+
+        #dialog.show .box{
+            top: 0px;
+        }
+
+        #dialog .close{
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            display: block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 50%;
+            color: #ff7878;
+            border: 1px solid;
+        }
+
+         #dialog .close:hover{
+             color:red;
+         }
+
+        #dialog .box h1{
+            text-align: center;
+            line-height: 400px;      
+            margin: 0;
+            color: rgb(185, 185, 185);
+            font-size: 80px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="testContent" style="height:3000px;">
+        <button id="login">show mask</button>
+    </div>
+    <div id="mask"></div>
+    <div id="dialog">
+        <div class="box">
+            <span class="close">x</span>
+            <h1>Hello Mask!</h1>
+        </div>
+    </div>
+
+    <script>
+        const loginBtn = document.querySelector('#login');
+        const mask = document.querySelector('#mask');
+        const closeBtn = document.querySelector('#dialog .close');
+        const dialog = document.querySelector('#dialog');
+
+        function close(){
+            dialog.classList.remove('show');
+            mask.classList.remove('show')
+        }
+
+        function open(){
+            dialog.classList.add('show');
+            mask.classList.add('show')
+        }
+
+        loginBtn.addEventListener('click', open);
+
+        closeBtn.onclick = close
+
+        dialog.onclick = (e) => {
+            if(e.target.id == 'dialog') close();
+        }
+
+    </script>
+</body>
+</html>
