@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JS 瀑布流</title>
+    <style>
+        #main{
+            position: relative;
+        }
+
+        #main:after{
+            content: '';
+            display: block;
+            clear: both;
+        }
+
+        .box{
+            float: left;
+            padding: 15px 0 0 15px;
+        }
+
+        .pic{
+            padding: 10px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 3px #ccc;
+            border-radius: 5px;
+            max-width: 100%;
+        }
+
+        .pic img{
+            width: 287px;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div class="box">
+            <div class="pic"><img src="./img/1.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/2.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/3.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/4.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/5.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/6.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/7.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/8.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/9.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/10.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/11.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/12.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/13.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/14.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/15.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/16.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/17.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/18.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/19.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/20.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/21.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/22.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/23.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/24.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/25.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/26.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/27.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/28.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/29.jpg" alt=""></div>
+        </div>
+        <div class="box">
+            <div class="pic"><img src="./img/30.jpg" alt=""></div>
+        </div>
+    </div>
+
+    <script>
+        function render(mainSelector, boxSelector){
+
+            const main = document.querySelector(mainSelector);
+            const boxArray = document.querySelectorAll(boxSelector);
+            const oneBoxWidth = boxArray[0].offsetWidth;
+            const boxCanLayNumber = Math.floor(document.documentElement.clientWidth / oneBoxWidth);
+            const mainWidth = boxCanLayNumber * oneBoxWidth;
+            main.style.cssText = `width:${mainWidth}px;margin:0 auto;`;
+
+            let boxHeightArray = [];
+
+            boxArray.forEach((box, index) => {
+                console.log(boxHeightArray);
+                if(index < boxCanLayNumber){  // 假如是第一行，那么直接就存储到数组里面
+                    boxHeightArray[index] = box.offsetHeight;
+                }else{
+                    const minHeightValue = Math.min(...boxHeightArray);  //  找到列里面最小的值。
+                    const minHeightIndex = boxHeightArray.findIndex((v) => v == minHeightValue); // 当前最小列的索引值  
+                    box.style.position = 'absolute';
+                    box.style.left = minHeightIndex * oneBoxWidth + 'px'; // 当minHeightIndex为 0 刚好，left 就为 0；
+                    // box.style.left = boxArray[minHeightIndex].offsetLeft + 'px'; // 跟每一列第一个的左偏移量相同也可
+                    box.style.top = minHeightValue + 'px';
+                    boxHeightArray[minHeightIndex] += box.offsetHeight;
+                }
+            });
+
+
+        }
+
+        const arrayLast = (arr) => arr[arr.length - 1]
+
+        function shouldLoad(mainSelector, boxSelector){
+            const main = document.querySelector(mainSelector);
+            const boxArray = document.querySelectorAll(boxSelector);
+            const scrollTop = document.body.scrollTop; // 当前滚动所处的位置
+            const clientHeight = document.documentElement.clientHeight; // 一个页面高度，第一屏的高度。
+            const lastBoxHeight = arrayLast(boxArray).offsetTop;  // 最后一个元素距离顶部的距离
+            return lastBoxHeight < scrollTop + clientHeight;  
+            // 当第一屏的高度加上滚动的高度，再减去一个容错的 300 大于最后一个盒字距离顶部的距离的时候
+            // scrollTop 是不包括当前可见的部分，所以要加上clientHeight可见部分的高度。
+        }
+
+        function loadImg(data, mainSelector){
+            const main = document.querySelector(mainSelector);
+            data.forEach((img, index) => {
+                // 创建 box 、将box假如到main中，创建pic，将pic添加到box中，创建img，将img添加到pic中
+                let box = document.createElement('div');
+                box.className = 'box';
+                main.appendChild(box);
+                let pic = document.createElement('div');
+                pic.classList.add('pic');
+                box.appendChild(pic);
+                let imgDom = document.createElement('img');
+                imgDom.src = `./img/${img.src}`;
+                pic.appendChild(imgDom);
+            });
+        }
+
+
+        window.onload = () => {
+            render('#main', '.box');
+
+            window.onscroll = () => {
+                console.log(shouldLoad('#main', '.box'));
+                if(shouldLoad('#main', '.box')){
+                    const data = [{src:'31.jpg'},{src:'32.jpg'},{src:'33.jpg'},{src:'34.jpg'},{src:'35.jpg'},{src:'36.jpg'},{src:'37.jpg'}];
+                    // data 是模拟的假数据
+                    loadImg(data, '#main');
+                    render('#main', '.box');
+                }
+            }
+        }
+    </script>
+</body>
+</html>

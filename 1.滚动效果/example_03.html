@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>回到顶部</title>
+
+    <style>
+        .box{
+            min-height: 2000px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+    <a href="javascript:void(0);" id="back-top">回到顶部</a>
+
+    <script>
+        let doc = document.body ;
+        let timer;
+
+        function aToB( a , b , rate){
+            return a + ( b - a ) / rate;
+        }
+
+        // 判断页面滚动的方向
+        function scroll( fn ) {  
+                let beforeScrollTop = document.body.scrollTop;
+                let callback = fn || function() {};  
+                doc.onscroll = () => {  
+                    let afterScrollTop = document.body.scrollTop;
+                    let delta = afterScrollTop - beforeScrollTop;  
+                    if( delta === 0 ) return false;  
+                    callback( delta > 0 ? "down" : "up" );  
+                    beforeScrollTop = afterScrollTop;
+                };  
+        }  
+
+        scroll((dir) => {
+            if(dir == "down"){
+                // 当用户想停，往下面一滚就可以停住。
+                clearInterval(timer);
+            }
+        });
+
+        let btn = document.querySelector('#back-top');
+
+        btn.onclick = () => {
+            timer = setInterval(() => {
+                doc.scrollTop = aToB(doc.scrollTop, 0 , 4);
+                if(doc.scrollTop <= 1) clearInterval(timer);
+            }, 50);
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>轮播</title>
+    <style>
+        *{
+           padding: 0;
+           margin: 0;
+        }
+
+        .container, .container li {
+            width: 400px;
+        }
+
+        .container{
+            overflow: hidden;
+            margin: 20px auto;
+        }
+
+        ul{
+           width: 3200px;
+           list-style: none;
+        }
+
+        ul:after{
+            content: '';
+            display: block;
+            clear: both;
+        }
+
+        .container li{
+            float: left;  
+            text-align: center;
+        }
+
+        .container li img {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+   <div class="container" id="Carousel" >
+       <ul>
+           <li><img src="http://desk.fd.zol-img.com.cn/t_s960x600c5/g5/M00/0B/06/ChMkJ1jwQjyIXn8sAAH-7v517g8AAbpyQKMLWsAAf8G90.jpeg" alt=""></li>
+           <li><img src="http://desk.fd.zol-img.com.cn/t_s960x600c5/g5/M00/0F/01/ChMkJ1jPUhqIcE05AAVLOLCv7H4AAa4nwF1zK4ABUtQ787.jpg" alt=""></li>
+           <li><img src="http://desk.fd.zol-img.com.cn/t_s960x600c5/g5/M00/01/0E/ChMkJlbKwYuId4plAAS7yhw9BL0AALGZwKPTTYABLvi038.jpg" alt=""></li>
+           <li><img src="http://desk.fd.zol-img.com.cn/t_s960x600c5/g5/M00/01/0E/ChMkJ1bKwYqIR2LdAAL1EEQXUccAALGZwIvzYkAAvUo497.jpg" alt=""></li>
+       </div>
+   </div>
+
+   <script>
+        let carousel = document.querySelector('#Carousel');
+        carousel.children[0].innerHTML += carousel.children[0].innerHTML;
+        carousel.scrollLeft = 0;
+        const itemWidth = 400;
+        const delay = 2000;
+        const speed = 20;
+        let timer;
+        let counter = 0;
+
+        function init() {
+            timer = setInterval(slide, speed);
+            counter += 10;
+            carousel.scrollLeft = counter; // 先滚一点, 避免一直停在 counter % itemWidth == 0
+        }
+
+        function slide() {  // 滚动逻辑
+            if (counter % itemWidth == 0) {
+                clearInterval(timer);
+                setTimeout(init, delay)
+            } else {
+                counter += 10;
+                carousel.scrollLeft = counter; 
+                if (counter >= carousel.scrollWidth / 2) {
+                    counter = 0;
+                    carousel.scrollLeft = counter;
+                }
+            }
+        }
+        setTimeout(init, delay)
+   </script>
+</body>
+</html>

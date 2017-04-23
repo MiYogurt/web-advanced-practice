@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>页面滚动效果</title>
+
+    <style>
+        .container {
+            width: 600px;
+            margin: 40px auto;
+        }
+        
+        .list {
+            overflow: hidden;
+            height: 120px;
+        }
+        
+        .list ul {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .list li {
+            height: 30px;
+            line-height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>诗词推荐</h1>
+        <div class="list">
+            <ul>
+                <li>1.水调歌头·隐括杜牧之齐山诗</li>
+                <li>2.初夏</li>
+                <li>3.皇矣</li>
+                <li>4.新雁过妆楼·中秋后一夕李方庵月庭延客命小妓过新水令坐间赋词</li>
+                <li>5.临江仙引·上国</li>
+            </ul>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        const listBox = document.querySelector('.list');
+        listBox.innerHTML += listBox.innerHTML;
+        listBox.scrollTop = 0;
+        const itemHeight = 30;
+        const delay = 2000;
+        const speed = 50;
+        let timer;
+        let counter = 0;
+
+        function init() {
+            timer = setInterval(slide, speed);
+            listBox.scrollTop = ++counter; // 先滚一点, 避免一直停在 counter % itemHeight == 0
+        }
+
+        function slide() {  // 滚动逻辑
+            if (counter % itemHeight == 0) {
+                clearInterval(timer);
+                setTimeout(init, delay)
+            } else {
+                listBox.scrollTop = ++counter; 
+                if (listBox.scrollTop >= listBox.scrollHeight / 2) {
+                    counter = 0;
+                    listBox.scrollTop = counter;
+                }
+            }
+        }
+        setTimeout(init, delay)
+    </script>
+</body>
+
+</html>

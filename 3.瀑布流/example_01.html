@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>瀑布流</title>
+    <style>
+        *{padding: 0;margin: 0;}
+        .container{
+            column-width: 350px;
+            column-gap: 20px;
+            padding: 0 20px;
+        }
+
+        .container div{
+           width: 350px;
+           overflow: hidden;
+           margin-bottom: 10px;
+           box-shadow: 0px 1px 1px 1px rgba(0,0,0,.21);
+        }
+
+        div img{
+            width: 100%;
+        }
+
+        .container div{
+            max-width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+            <div>
+                <img src="./img/1.jpg">
+            </div>
+            <div>
+                <img src="./img/2.jpg">
+            </div>
+            <div>
+                <img src="./img/3.jpg">
+            </div>
+             <div>
+                <img src="./img/4.jpg">
+            </div>
+             <div>
+                <img src="./img/5.jpg">
+            </div>
+             <div>
+                <img src="./img/6.jpg">
+            </div>
+            <div>
+                <img src="./img/6.jpg">
+            </div>
+            <div>
+                <img src="./img/10.jpg">
+            </div>
+            <div>
+                <img src="./img/8.jpg">
+            </div>
+            <div>
+                <img src="./img/9.jpg">
+            </div>
+    </div>
+</body>
+</html>
