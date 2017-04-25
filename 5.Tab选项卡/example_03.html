@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JS Tab</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .tabs{
+            width: 680px;
+            padding: 5px;
+            margin: 50px auto;
+        }
+
+        .menus{
+            height: 40px;
+            width: 100%;
+        }
+
+        .menu{
+            height: 40px;
+            line-height: 40px;
+            width: 120px;
+            border: none;
+            outline: none;
+            margin-right: -5px;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .menu.checked{
+            background: #F7A3A3;
+        }
+
+        .panels{
+            background: buttonface;
+            min-height: 315px;
+            border-radius: 0 10px 10px 10px;
+            position: relative;
+        }
+        
+        .panel{
+            width: 100%;
+            opacity: 0;
+            transition: .7s;
+            position: absolute;
+        }
+
+        .panel.show{
+            opacity: 1;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="tabs">
+        <div class="menus">
+            <button class="menu">One</button>
+            <button class="menu">Two</button>
+            <button class="menu">Three</button>
+            <button class="menu">Four</button>
+        </div>
+        <div class="panels">
+            <div class="panel">
+                <h1>山有木兮木有枝，心悦君兮君不知。</h1>
+            </div>
+            <div class="panel">2</div>
+            <div class="panel">3</div>
+            <div class="panel">4</div>
+        </div>
+    </div>
+
+
+    <script>
+        function init(){
+            let panels = Array.from(document.querySelectorAll('.panel'));
+            let menus = Array.from(document.querySelectorAll('.menu'));
+
+            showTab(panels, menus, 0); // 显示第一页
+
+            menus.forEach((menu, index) => {
+                menu.onclick = () => {
+                    clearCSS(panels, menus); // 清楚所有css
+                    showTab(panels, menus, index);
+                }
+            });
+        }
+
+        function clearCSS(panels, menus){
+            menus.forEach((p) => p.classList.remove('checked'));
+            panels.forEach((p) => p.classList.remove('show'));
+        }
+
+        function showTab(panels, menus, index){
+            panels[index].classList.add('show');
+            menus[index].classList.add('checked')
+        }
+
+        init();
+
+    </script>
+</body>
+</html>

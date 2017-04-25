@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tab</title>
+    <style>
+        .tab{
+            width: 800px;
+            height: 600px;
+            position: relative;
+            margin: 0 auto;
+            background: #f7f7f7;
+        }
+
+        .content:first-of-type{
+            display: block;
+            z-index: 1;
+        }
+
+        .one:hover ~ .content:nth-of-type(1),
+        .two:hover ~ .content:nth-of-type(2),
+        .three:hover ~ .content:nth-of-type(3),
+        .four:hover ~ .content:nth-of-type(4)
+        {
+            display: block;
+            z-index: 9;
+            background: #f7f7f7;
+        }
+
+
+        .one ~ .content:nth-of-type(1):hover,
+        .two ~ .content:nth-of-type(2):hover,
+        .three ~ .content:nth-of-type(3):hover,
+        .four ~ .content:nth-of-type(4):hover{
+            display: block;
+            z-index: 9;
+            background: #f7f7f7;
+        }
+
+
+        .top{
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            display: block;
+            text-align: center;
+            float: left;
+            background: #f5f5f5;
+            cursor: pointer;
+        }
+
+        .content{
+            position: absolute;
+            top: 30px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="tab">
+        <span class="top one">1</span>
+        <div class="content">
+            <h1>Hello Tab</h1>
+            <a href="www.baidu.com">baidu.com</a>
+        </div>
+        <span class="top two">2</span>
+        <div class="content">222</div>
+        <span class="top three">3</span>
+        <div class="content">333</div>
+        <span class="top four">4</span>
+        <div class="content">4444</div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>调整窗口大小</title>
+
+    <style>
+        .panel{
+            position: relative;
+            border: 1px solid #eee;
+            width: 400px;
+            height: 350px;
+            margin: 100px;
+            text-align: center;
+        }
+
+        .right-bar{
+            width: 10px;
+            height: 100%;
+            position: absolute;
+            right: 0;
+            top: 0;
+            cursor: e-resize;
+        }
+
+        .bottom-bar{
+            height: 10px;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            cursor: s-resize;
+        }
+
+        .right-bottom-bar{
+            height: 20px;
+            width: 20px;
+            right: 0;
+            bottom: 0;
+            position: absolute;
+            cursor: nw-resize;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="panel" id="resizeAble" >
+        <h1>Hello Window</h1>
+    </div>
+
+    <script>
+        const panel = document.querySelector('#resizeAble');
+
+        var move_to_x, move_to_y; // 移动后的新坐标
+
+        var timer; // 不停设置面板宽度和高度的定时器
+
+        let min_width = 300;
+        let min_height = 250; // 最小的宽度和高度
+
+        document.onmousemove = (e) => {
+            move_to_x = e.pageX;
+            move_to_y = e.pageY;
+        }
+
+        document.onmouseup = document.ondrag = (e) => { // ondrag 是拖拽时间，有的时候把边栏当做拖拽的时候，没有及时清除 timer 就会出现 bug
+            clearInterval(timer);
+            timer = null;
+        }
+
+        panel.onselectstart = () => (false); // 禁止面板中被选中
+
+        // 动态的添加控制栏
+        function addControlSideBar(panel){
+            const rightBar = document.createElement('div');
+            const bottomBar = document.createElement('div');
+            const rightBottomBar = document.createElement('div');
+
+            rightBar.className = 'right-bar';
+            bottomBar.className = 'bottom-bar';
+            rightBottomBar.className = 'right-bottom-bar';
+
+
+            let controlArray = [ rightBar, bottomBar, rightBottomBar] ;
+
+            controlArray.forEach((i) => {
+                i.draggable = false; // 禁用拖拽
+                panel.appendChild(i)
+            });
+
+            return controlArray;
+        }
+
+        // 设置面板的状态
+        function setPanelStatus(e){
+            // 当鼠标按下那一刻执行这个函数
+                let start_x = e.pageX - e.target.offsetLeft;
+                let start_y = e.pageY - e.target.offsetTop;
+                // (start_x, start,y) 盒子左上角的坐标值.
+
+                // 此时只要我们不放鼠标，那么高度就会跟随 move_to_x， 和 move_to_y 一直设置。 这个一直设置，我们需要用一个定时器来实现。
+
+                timer = setInterval(() => {
+                    const width = Math.max(min_width, move_to_x - start_x);
+                    const height = Math.max(min_height, move_to_y - start_y);
+
+                    // 判断我们按下的是哪个控制栏，根据类别来设置宽和高
+                    // 这里的 10 和 20 分别是 变量的宽度
+                    switch(e.target.className){
+                        case 'right-bar':
+                            panel.style.width = (width + 10 ) + 'px';
+                            break;
+                        case 'bottom-bar':;
+                            panel.style.height = (height + 10) + 'px';
+                            break;
+                        case 'right-bottom-bar':
+                            panel.style.height = (height + 20) + 'px';
+                            panel.style.width = (width + 20) + 'px';
+                            break;
+                    }
+                }, 10)
+        }
+
+        // 为控制栏添加监听
+        function listenerControlSideBar(controlArray){
+            controlArray.forEach((v, k) => {
+                v.addEventListener('mousedown', setPanelStatus , false)
+                v.addEventListener('selectstart', () => (false), false); // 禁止被选中
+
+            })
+        }
+
+       let controlArray = addControlSideBar(panel);
+       listenerControlSideBar(controlArray);
+
+    </script>
+</body>
+</html>
