@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>手风琴效果</title>
+    <style>
+        *{margin: 0;padding: 0;}
+        .panel{
+            width: 480px;
+            min-height: 160px;
+            margin: 50px auto;
+            background: #eee;
+        }
+        .panel dt{
+            min-height: 40px;
+            line-height: 40px;
+            background: #f9f9f9;
+            padding-left: 10px;
+            cursor: pointer;
+        }
+
+        .panel dd{
+            padding-left: 10px;
+            height: 0;
+            overflow: hidden;
+            transition: height .5s;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="panel">
+       <dl>
+           <dt>One Item</dt>
+           <dd>One Item Content .</dd>
+           <dt>two Item</dt>
+           <dd>two Item Content .</dd>
+           <dt>3 Item</dt>
+           <dd>3 Item Content .</dd>
+           <dt>4 Item</dt>
+           <dd>4 Item Content .</dd>
+       </dl>
+    </div>
+
+    <script>
+        const dtDoms = document.querySelectorAll('dt');
+
+        Array.from(dtDoms).forEach((dtDom) => {
+            dtDom.onclick = (e) => {
+                const dd = e.target.nextElementSibling; // 被点击的dt的下一个dd元素
+                toggle(dd);
+            }
+        });
+
+        function toggle(target){
+            const ddDoms = document.querySelectorAll('dd');
+            if(target.style.height == '' || target.style.height == '0px' ) { // 第一次的时候 height 为 ‘’ 空字符串.
+                for(dd of ddDoms){
+                    dd.style.height = '0px';
+                }
+                Object.assign(target.style, {
+                    position: "absolute",
+                    left: "-2000px",
+                    top: "-2000px",
+                    height: "auto"
+                });
+                const height = target.offsetHeight;
+                target.style.cssText = 'height: 0px';
+                requestAnimationFrame(() => {
+                    target.style.cssText = 'height: ' + height + 'px';
+                })
+            }else{
+                target.style.height = '0px';
+            }
+        }
+
+
+    </script>
+</body>
+</html>
