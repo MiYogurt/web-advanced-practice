@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Index</title>
+    <style>
+        body{
+            min-height: 4000px;
+        }
+        .roll{
+            position: relative;
+            width: 400px;
+            height: 200px;
+            background: red;
+
+            transition: all .5s;
+        }
+    </style>
+</head>
+<body>
+    <div class="roll">
+
+    </div>
+
+    <script>
+        const roll = document.querySelector('.roll');
+        window.onscroll = (e) => {
+            if(document.body.scrollTop > 20 ){
+                roll.style.top = (document.body.scrollTop + 20) + 'px';
+            }
+        }
+    </script>
+</body>
+</html>

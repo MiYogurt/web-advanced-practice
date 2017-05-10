@@ -12,20 +12,25 @@
             min-height: 160px;
             margin: 50px auto;
             background: #eee;
+            border-radius: 5px;
         }
         .panel dt{
             min-height: 40px;
             line-height: 40px;
             background: #f9f9f9;
+            border-bottom: 1px solid #eee;
             padding-left: 10px;
             cursor: pointer;
         }
 
         .panel dd{
             padding-left: 10px;
+            padding-right: 10px;
             height: 0;
             overflow: hidden;
             transition: height .5s;
+            text-indent: 1em;
+            line-height: 2;
         }
 
     </style>
@@ -33,14 +38,18 @@
 <body>
     <div class="panel">
        <dl>
-           <dt>One Item</dt>
-           <dd>One Item Content .</dd>
-           <dt>two Item</dt>
-           <dd>two Item Content .</dd>
-           <dt>3 Item</dt>
-           <dd>3 Item Content .</dd>
-           <dt>4 Item</dt>
-           <dd>4 Item Content .</dd>
+           <dt>满江红·点火樱桃</dt>
+           <dd>点火樱桃，照一架、荼蘼如雪。春正好，见龙孙穿破，紫苔苍壁。乳燕引雏飞力弱，流莺唤友娇声怯。问春归、不肯带愁归，肠千结。
+层楼望，春山叠；家何在？烟波隔。把古今遗恨，向他谁说？蝴蝶不传千里梦，子规叫断三更月。听声声、枕上劝人归，归难得。</dd>
+           <dt>菩萨蛮·送曹君之庄所</dt>
+           <dd>人间岁月堂堂去，劝君快上青云路。圣处一灯传，工夫萤雪边。
+麴生风味恶，辜负西窗约。沙岸片帆开，寄书无雁来。</dd>
+           <dt>丑奴儿·晚来一阵风兼雨</dt>
+           <dd>晚来一阵风兼雨，洗尽炎光。理罢笙簧，却对菱花淡淡妆。
+绛绡缕薄冰肌莹，雪腻酥香。笑语檀郎：今夜纱厨枕簟凉。</dd>
+           <dt>清商怨·葭萌驿作</dt>
+           <dd>江头日暮痛饮。乍雪晴犹凛。山驿凄凉，灯昏人独寝。 
+鸳机新寄断锦。叹往事、不堪重省。梦破南楼，绿云堆一枕。</dd>
        </dl>
     </div>
 
@@ -64,10 +73,11 @@
                     position: "absolute",
                     left: "-2000px",
                     top: "-2000px",
-                    height: "auto"
+                    height: "auto",
+                    width: '480px'
                 });
                 const height = target.offsetHeight;
-                target.style.cssText = 'height: 0px';
+                target.style.cssText = 'height: 0';
                 requestAnimationFrame(() => {
                     target.style.cssText = 'height: ' + height + 'px';
                 })

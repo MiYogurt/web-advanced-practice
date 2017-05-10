@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>拖拽</title>
+
+    <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        .dialog{
+            width: 480px;
+            height: 300px;
+            background: #eee;
+            position: absolute;
+        }
+
+        .dialog-title{
+            width: 480px;
+            height: 40px;
+            background: #999;
+            cursor: move;
+            text-align: center;
+            line-height: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dialog" id="canMove">
+        <div class="dialog-title" id="canDrag">
+            Title
+        </div>
+        <div class="content">
+
+        </div>
+    </div>
+
+    <script>
+        const dragEle = document.querySelector('#canDrag');
+        const canMove = document.querySelector('#canMove');
+
+        dragEle.onselectstart = canMove.onselectstart =  () => {
+            return false;
+        } // 禁止被选中
+
+        let timer;
+
+        const mouse = {
+            x: 0,
+            y: 0
+        } // 记录当前鼠标移动的坐标点
+
+        const distance = {
+            topTop: 0,
+            topLeft: 0
+        } // 鼠标按下时候距离 CanMove 左上角的距离
+
+        document.onmousemove = (e) => {
+            mouse.x = e.pageX;
+            mouse.y = e.pageY;
+        } // 记录鼠标坐标
+
+        document.onmouseup = document.ondrag = (e) => {
+            clearInterval(timer);
+            timer = null;
+        } // 鼠标弹起，清空设置left的定时器
+
+        dragEle.onmousedown = (e) => {
+            distance.topLeft = e.pageX - canMove.offsetLeft;
+            distance.topTop = e.pageY - canMove.offsetTop;
+
+            timer = setInterval(setPosition, 10);
+        }
+
+        function setPosition(){
+            const maxX = (document.body.clientWidth || document.documentElement.clientWidth) - canMove.offsetWidth;
+            const maxY = (document.body.clientHeight || document.documentElement.clientHeight) - canMove.offsetHeight;
+
+            canMove.style.left = Math.max(Math.min((mouse.x - distance.topLeft), maxX), 0) + 'px';
+            canMove.style.top = Math.max(Math.min((mouse.y - distance.topTop), maxY), 0) + 'px'; 
+        }
+
+    </script>
+</body>
+</html>

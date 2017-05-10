@@ -77,7 +77,8 @@
                     position: "absolute",
                     left: "-2000px",
                     top: "-2000px",
-                    height: "auto"
+                    height: "auto",
+                    width: "480px"
                 });
                 const height = target.offsetHeight;
                 target.style.cssText = 'height: 0px';
