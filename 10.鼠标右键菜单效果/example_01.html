@@ -77,18 +77,8 @@
     </div>
     
     <script>
-        var getOffset = {
-            top: function (obj) {
-                return obj.offsetTop + (obj.offsetParent ? this.top(obj.offsetParent) : 0)
-            },
-            left: (obj) => {
-                console.dir(obj);""
-                console.log(obj.offsetLeft);
-                return obj.offsetLeft + (obj.offsetParent ? getOffset.left(obj.offsetParent) : 0)
-            }
-        };
 
-        function setWidth(obj) {
+        function setWidth(obj) { // 设置obj的宽度，拿到下面li标签里面最宽的，设置为ul的宽度
             let maxWidth = 0;
 
             for (i = 0; i < obj.children.length; i++) {
@@ -99,15 +89,16 @@
 
             for (i = 0; i < obj.children.length; i++) obj.children[i].style.width = maxWidth + "px";
         }
+
         const liNodeList = document.querySelectorAll('li');
 
         const menu = document.querySelector('.menu');
 
         Array.from(liNodeList).forEach( li => {
             const innerUlDom = li.querySelector('ul');
-            innerUlDom && li.classList.add('hasNext');
+            innerUlDom && li.classList.add('hasNext'); // 当 li 下面有 ul标签的时候，添加一个小箭头的样式
 
-            let clearTimer, showTimer;
+            // let clearTimer, showTimer;
             
             li.addEventListener('mouseover', (e) => {
                 if(innerUlDom){
@@ -127,15 +118,15 @@
                     // }, 300);
 
                 }
-            }, true);
+            }, true); // 阻止冒泡，让逻辑正常
 
             li.onclick = (e) => {
                 e.stopPropagation();
-                console.log('你点击了', e.target);
+                console.log('你点击了', e.target); // 为每一个li绑定一下事件
                 hidden(menu);
             }
 
-            li.onmouseout = () => {
+            li.onmouseout = () => { // 鼠标移出的时候，隐藏菜单
                 // showTimer && clearTimeout(showTimer)
                 // clearTimer = setTimeout(() => {
                     li.classList.remove('active'); // 鼠标移开去掉 active 类
@@ -148,7 +139,7 @@
         });
 
 
-        function hidden(target)
+        function hidden(target) // 隐藏菜单方法
         {
             target.style.display = 'none';
             target.style.left = '-900px';
@@ -160,19 +151,19 @@
             document.oncontextmenu = (e) => {
                 e.preventDefault();
 
-                menu.style.display = 'block';
+                menu.style.display = 'block'; // 显示出菜单栏
 
                 const uls = document.querySelectorAll('ul');
-                setWidth(uls[0]);
+                setWidth(uls[0]); // 设置 ul 的宽度
 
 
-                menu.style.left = e.pageX + 'px';
+                menu.style.left = e.pageX + 'px'; // 让菜单栏显示在鼠标所点的位置
                 menu.style.top = e.pageY + 'px';
                 return false;
             }
 
             document.onclick = (e) =>{
-                console.log('你取消了菜单');
+                console.log('你取消了菜单'); // 当在其他地方点击的时候，取消显示菜单
                 hidden(menu);
             }
         }
