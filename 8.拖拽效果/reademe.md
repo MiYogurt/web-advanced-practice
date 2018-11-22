@@ -1,6 +1,6 @@
 拖拽效果，和调整窗口大小其实差不多，首先我们来看一张图。
 
-![](https://dn-nwggkrtp.qbox.me/fa30e35a5d1d7dfe210a.png)
+![](./img/screenshoot.png)
 
 黑色的小圆点，是我们鼠标单击的点。
 
